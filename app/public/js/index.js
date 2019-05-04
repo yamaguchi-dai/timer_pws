@@ -1,6 +1,5 @@
 class Timer {
-    constructor(sec) {
-
+    constructor() {
         this.timer_button = $('#timer_btn');
         this.timer_text = $('#timer_text');
         this.common_div = Timer._init_timer_view();//out_div.width()
@@ -18,13 +17,19 @@ class Timer {
     //タイマースタート
     init_timer(sec) {
         this.time = sec;
+        let set_text = () => {
+            let time = Timer.converter(this.time);
+            this.timer_text.text(time.min + ':' + time.sec);
+        };
+
+        set_text();
+
         let calc = () => {
             console.log(this.time);
             if (this.is_run_timer) {
                 console.log('reload time');
                 this.time = this.time - 1;
-                let time = Timer.converter(this.time);
-                this.timer_text.text(time.min + ':' + time.sec);
+                set_text();
             }
         };
 
@@ -91,8 +96,8 @@ class Timer {
         let sec = sec_time % 60;
 
         return {
-            min: min,
-            sec: sec
+            min: String(min).padStart(2, "0"),
+            sec: String(sec).padStart(2, "0")
         }
     }
 
