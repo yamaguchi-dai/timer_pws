@@ -21,20 +21,25 @@ class Timer {
             let time = Timer.converter(this.time);
             this.timer_text.text(time.min + ':' + time.sec);
         };
-
+        //初期描画
         set_text();
-
+        //タイマー終了処理
+        let end_timer = () => {
+            clearInterval(this.run);
+        };
+        //タイマー進行処理
         let calc = () => {
             console.log(this.time);
             if (this.is_run_timer) {
                 console.log('reload time');
                 this.time = this.time - 1;
                 set_text();
+                //タイマー終了
+                if (this.time === 0) end_timer();
             }
         };
-
-        //タイマー
-        setInterval(function () {
+        //タイマー実行処理
+        this.run = setInterval(function () {
             calc();
         }, 1000);
     }
